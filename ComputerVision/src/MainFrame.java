@@ -5,9 +5,17 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import javax.imageio.ImageIO;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -47,12 +55,48 @@ public class MainFrame extends javax.swing.JFrame {
     public static final String uriBaseThumbnail = "v1.0/generateThumbnail";
     public static final String uriBaseOcr = "v1.0/ocr";
     public static final String uriBaseHandwriting = "v1.0/recognizeText";
+    private final HashMap<Integer,MenuItem> myItems;
+    private final MenuTransTrie trie = new MenuTransTrie();
+    private ArrayList<MenuItem> foundMenuItems;
 
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
         initComponents();
+        myItems = new HashMap();
+        myItems.put(1, new MenuItem("/Users/lewis/Downloads/307.jpg","Stir Fried Jellyfish with shredded Chicken",""));
+        myItems.put(2, new MenuItem("/Users/lewis/Downloads/37.jpg","Sautéed Pork Loins ",""));
+        myItems.put(3, new MenuItem("/Users/lewis/Downloads/338.jpg","Sautéed Beef with Red Basil and Green Onion",""));
+        myItems.put(4, new MenuItem("/Users/lewis/Downloads/141.jpg","Sauteed String Beans with Ground Pork",""));
+        myItems.put(5, new MenuItem("/Users/lewis/Downloads/20.jpg","Seafood Hot and Sour Soup",""));
+        myItems.put(6, new MenuItem("/Users/lewis/Downloads/131.jpg","Braised Tofu with Black Mushrooms and Bamboo Shoots",""));
+        myItems.put(7, new MenuItem("/Users/lewis/Downloads/426.jpg","Pan-fried Red Bean Cake",""));
+        myItems.put(8, new MenuItem("/Users/lewis/Downloads/57.jpg","Honey Walnut Shrimp",""));
+        initializeTrie();
+    }
+    
+    private void initializeTrie() {
+        List<String> str = new LinkedList();
+        List<Integer> lng = new LinkedList();
+        
+        str.add("蜇皮雞絲");
+        lng.add(1);
+        str.add("京都肉排");
+        lng.add(2);
+        str.add("九層塔炒牛肉");
+        lng.add(3);
+        str.add("干扁四季豆");
+        lng.add(4);
+        str.add("海鮮酸辣湯");
+        lng.add(5);
+        str.add("紅燒豆腐");
+        lng.add(6);
+        str.add("豆沙鍋餅");
+        lng.add(7);
+        str.add("核桃蝦");
+        lng.add(8);
+        trie.buildTree(str, lng);
     }
 
     /**
@@ -125,6 +169,8 @@ public class MainFrame extends javax.swing.JFrame {
         ocrScrollPane = new javax.swing.JScrollPane();
         ocrResponseTextArea = new javax.swing.JTextArea();
         ocrImage = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        menuItemList = new javax.swing.JList<>();
         handwritingPanel = new javax.swing.JPanel();
         handwritingTitleLabel = new javax.swing.JLabel();
         handwritingInstructionLabel = new javax.swing.JLabel();
@@ -494,6 +540,13 @@ public class MainFrame extends javax.swing.JFrame {
         ocrResponseTextArea.setRows(5);
         ocrScrollPane.setViewportView(ocrResponseTextArea);
 
+        menuItemList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listItemDoubleClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(menuItemList);
+
         javax.swing.GroupLayout ocrPanelLayout = new javax.swing.GroupLayout(ocrPanel);
         ocrPanel.setLayout(ocrPanelLayout);
         ocrPanelLayout.setHorizontalGroup(
@@ -501,17 +554,14 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(ocrPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(ocrPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ocrTitleLabel)
+                    .addComponent(ocrInstructionLabel)
                     .addGroup(ocrPanelLayout.createSequentialGroup()
-                        .addGroup(ocrPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ocrTitleLabel)
-                            .addComponent(ocrInstructionLabel)
-                            .addGroup(ocrPanelLayout.createSequentialGroup()
-                                .addComponent(ocrImagePromptLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(ocrImageUriTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(ocrImageButton)))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(ocrImagePromptLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ocrImageUriTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ocrImageButton))
                     .addGroup(ocrPanelLayout.createSequentialGroup()
                         .addGroup(ocrPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(ocrScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -520,8 +570,11 @@ public class MainFrame extends javax.swing.JFrame {
                         .addGroup(ocrPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(ocrPanelLayout.createSequentialGroup()
                                 .addComponent(ocrSourceImageLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 447, Short.MAX_VALUE))
-                            .addComponent(ocrImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(ocrPanelLayout.createSequentialGroup()
+                                .addComponent(ocrImage, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         ocrPanelLayout.setVerticalGroup(
@@ -542,6 +595,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(ocrSourceImageLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(ocrPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
                     .addComponent(ocrImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(ocrScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE))
                 .addContainerGap())
@@ -722,7 +776,24 @@ public class MainFrame extends javax.swing.JFrame {
         // Format and display the JSON response.
         ocrResponseTextArea.setText(jsonObj.toString(2)); 
         JsonParser parseObj = new JsonParser(jsonObj);
-        parseObj.ConvertJSONtoList();
+        List<String> myList = parseObj.ConvertJSONtoList();
+        List<Integer> foundItems = new ArrayList();
+        int index;
+        for(String str: myList) {
+            index = trie.search(MenuTransTrie.strToList(str));
+            if(index > 0)
+                foundItems.add(index);
+        }
+        foundMenuItems = new ArrayList();
+        for(Integer l: foundItems){
+            foundMenuItems.add(myItems.get(l));
+        }
+        DefaultListModel listModel = new DefaultListModel();
+        for (int i = 0; i < foundMenuItems.size(); i++)
+        {
+            listModel.addElement(foundMenuItems.get(i).getName());
+        }
+        this.menuItemList.setModel(listModel);
         } catch(IOException e) {
             ocrResponseTextArea.setText("Error loading OCR image: " + e.getMessage());
             return;
@@ -800,6 +871,23 @@ public class MainFrame extends javax.swing.JFrame {
         // Replace these two lines with the Read Handwritten Text Image event handling code.
         handwritingResponseTextArea.setText("The tutorial code for this feature has not been added.");
     }//GEN-LAST:event_handwritingImageButtonActionPerformed
+
+    private void listItemDoubleClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listItemDoubleClicked
+        // TODO add your handling code here:
+        JList list = (JList)evt.getSource();
+        if (evt.getClickCount() == 2) {
+            int index = list.locationToIndex(evt.getPoint());
+            String text = (String)list.getModel().getElementAt(index);
+            for(MenuItem item: foundMenuItems) {
+                if(text.equals(item.getName())){
+                    MenuItemDisplay dis = new MenuItemDisplay();
+                    dis.setupFrame(item);
+                    dis.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                    dis.setVisible(true);
+                }
+            }
+        }
+    }//GEN-LAST:event_listItemDoubleClicked
 
     /**
      * Scales the given image to fit the label dimensions.
@@ -916,6 +1004,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane handwritingScrollPane;
     private javax.swing.JLabel handwritingSourceImageLabel;
     private javax.swing.JLabel handwritingTitleLabel;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel landmarkCaptionLabel;
     private javax.swing.JLabel landmarkImage;
     private javax.swing.JButton landmarkImageButton;
@@ -928,6 +1017,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane landmarkScrollPane;
     private javax.swing.JLabel landmarkSourceImageLabel;
     private javax.swing.JLabel landmarkTitleLabel;
+    private javax.swing.JList<String> menuItemList;
     private javax.swing.JLabel ocrImage;
     private javax.swing.JButton ocrImageButton;
     private javax.swing.JLabel ocrImagePromptLabel;

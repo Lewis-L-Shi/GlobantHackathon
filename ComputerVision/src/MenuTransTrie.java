@@ -18,7 +18,7 @@ public class MenuTransTrie {
     private class Trie {
         boolean isWord;
         HashMap<Character, Trie> TrieNode;
-        long id;
+        int id;
         
         public Trie() {
             TrieNode = new HashMap();
@@ -33,7 +33,7 @@ public class MenuTransTrie {
         head = new Trie();
     }
     
-    public void insert(List<Character> list, long id) {
+    public void insert(List<Character> list, int id) {
         Trie curNode = head;
         for(int i = 0; i < list.size(); i++) {
             Character c = list.get(i);
@@ -46,7 +46,7 @@ public class MenuTransTrie {
         curNode.id = id;
     }
     
-    public long search(List<Character> list) {
+    public int search(List<Character> list) {
         Trie curNode = head;
         for(int i = 0; i < list.size(); i++) {
             Character c = list.get(i);
@@ -62,7 +62,7 @@ public class MenuTransTrie {
             return -1;
     }
     
-    public void buildTree(List<String> list, List<Long> ids){
+    public void buildTree(List<String> list, List<Integer> ids){
         if(list.size() != ids.size()) {
             System.out.println("Tree Build Failed: Lists are not the same size.");
             return;
