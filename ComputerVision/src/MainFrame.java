@@ -122,6 +122,8 @@ public class MainFrame extends javax.swing.JFrame {
         ocrScrollPane = new javax.swing.JScrollPane();
         ocrResponseTextArea = new javax.swing.JTextArea();
         ocrImage = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
         handwritingPanel = new javax.swing.JPanel();
         handwritingTitleLabel = new javax.swing.JLabel();
         handwritingInstructionLabel = new javax.swing.JLabel();
@@ -179,7 +181,7 @@ public class MainFrame extends javax.swing.JFrame {
                         .addGroup(analyzePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(analyzePanelLayout.createSequentialGroup()
                                 .addComponent(analyzeSourceImageLabel)
-                                .addGap(0, 437, Short.MAX_VALUE))
+                                .addGap(0, 647, Short.MAX_VALUE))
                             .addComponent(analyzeImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(analyzeCaptionLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(analyzePanelLayout.createSequentialGroup()
@@ -213,7 +215,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(analyzeSourceImageLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(analyzePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(analyzeScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)
+                    .addComponent(analyzeScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE)
                     .addGroup(analyzePanelLayout.createSequentialGroup()
                         .addComponent(analyzeImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -273,7 +275,7 @@ public class MainFrame extends javax.swing.JFrame {
                                 .addComponent(landmarkResponseLabel)
                                 .addGap(359, 359, 359)
                                 .addComponent(landmarkSourceImageLabel)))
-                        .addGap(0, 423, Short.MAX_VALUE)))
+                        .addGap(0, 516, Short.MAX_VALUE)))
                 .addGap(10, 10, 10))
         );
         landmarkPanelLayout.setVerticalGroup(
@@ -294,7 +296,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(landmarkSourceImageLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(landmarkPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(landmarkScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
+                    .addComponent(landmarkScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
                     .addGroup(landmarkPanelLayout.createSequentialGroup()
                         .addComponent(landmarkImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -343,7 +345,7 @@ public class MainFrame extends javax.swing.JFrame {
                                 .addComponent(celebritiesImageUriTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(celebritiesImageButton)))
-                        .addGap(0, 431, Short.MAX_VALUE))
+                        .addGap(0, 590, Short.MAX_VALUE))
                     .addGroup(celebritiesPanelLayout.createSequentialGroup()
                         .addGroup(celebritiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(celebritiesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -375,7 +377,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(celebritiesResponseLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(celebritiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(celebritiesScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)
+                    .addComponent(celebritiesScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
                     .addGroup(celebritiesPanelLayout.createSequentialGroup()
                         .addComponent(celebritiesImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -433,7 +435,7 @@ public class MainFrame extends javax.swing.JFrame {
                         .addGroup(thumbnailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(thumbnailSourceImageLabel)
                             .addComponent(thumbnailSourceImage, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 240, Short.MAX_VALUE)
                 .addGroup(thumbnailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(thumbnailImage, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(thumbnailThumbnailLabel))
@@ -462,7 +464,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(thumbnailSourceImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(thumbnailPanelLayout.createSequentialGroup()
                         .addComponent(thumbnailImage, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 258, Short.MAX_VALUE)))
+                        .addGap(0, 270, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -491,6 +493,13 @@ public class MainFrame extends javax.swing.JFrame {
         ocrResponseTextArea.setRows(5);
         ocrScrollPane.setViewportView(ocrResponseTextArea);
 
+        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(jList1);
+
         javax.swing.GroupLayout ocrPanelLayout = new javax.swing.GroupLayout(ocrPanel);
         ocrPanel.setLayout(ocrPanelLayout);
         ocrPanelLayout.setHorizontalGroup(
@@ -498,6 +507,19 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(ocrPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(ocrPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(ocrPanelLayout.createSequentialGroup()
+                        .addGroup(ocrPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ocrScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ocrResponseLabel))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(ocrPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(ocrPanelLayout.createSequentialGroup()
+                                .addComponent(ocrSourceImageLabel)
+                                .addContainerGap())
+                            .addGroup(ocrPanelLayout.createSequentialGroup()
+                                .addComponent(ocrImage, javax.swing.GroupLayout.DEFAULT_SIZE, 448, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(ocrPanelLayout.createSequentialGroup()
                         .addGroup(ocrPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(ocrTitleLabel)
@@ -508,18 +530,7 @@ public class MainFrame extends javax.swing.JFrame {
                                 .addComponent(ocrImageUriTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(ocrImageButton)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(ocrPanelLayout.createSequentialGroup()
-                        .addGroup(ocrPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ocrScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ocrResponseLabel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(ocrPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(ocrPanelLayout.createSequentialGroup()
-                                .addComponent(ocrSourceImageLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 447, Short.MAX_VALUE))
-                            .addComponent(ocrImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap())
+                        .addContainerGap())))
         );
         ocrPanelLayout.setVerticalGroup(
             ocrPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -539,9 +550,12 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(ocrSourceImageLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(ocrPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ocrImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(ocrScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addGroup(ocrPanelLayout.createSequentialGroup()
+                        .addGroup(ocrPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ocrImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(ocrScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE))
+                        .addContainerGap())
+                    .addComponent(jScrollPane1)))
         );
 
         tabbedPane.addTab("OCR", ocrPanel);
@@ -595,7 +609,7 @@ public class MainFrame extends javax.swing.JFrame {
                         .addGroup(handwritingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(handwritingPanelLayout.createSequentialGroup()
                                 .addComponent(handwritingSourceImageLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 447, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 653, Short.MAX_VALUE))
                             .addComponent(handwritingImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
@@ -618,7 +632,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(handwritingPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(handwritingImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(handwritingScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE))
+                    .addComponent(handwritingScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -815,6 +829,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane handwritingScrollPane;
     private javax.swing.JLabel handwritingSourceImageLabel;
     private javax.swing.JLabel handwritingTitleLabel;
+    private javax.swing.JList<String> jList1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel landmarkCaptionLabel;
     private javax.swing.JLabel landmarkImage;
     private javax.swing.JButton landmarkImageButton;
