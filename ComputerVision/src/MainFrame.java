@@ -692,9 +692,96 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void ocrImageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ocrImageButtonActionPerformed
         // Replace these two lines with the OCR Image event handling code.
-        ocrResponseTextArea.setText("The tutorial code for this feature has not been added.");
+        
+        URL ocrImageUrl;
+
+        // Clear out the previous image, response, and caption, if any.
+        ocrImage.setIcon(new ImageIcon());
+        ocrResponseTextArea.setText("");
+
+        // Display the image specified in the text box.
+        try {
+            ocrImageUrl = new URL(ocrImageUriTextBox.getText());
+            BufferedImage bImage = ImageIO.read(ocrImageUrl);
+            scaleAndShowImage(bImage, ocrImage);
+        } catch(IOException e) {
+            ocrResponseTextArea.setText("Error loading OCR image: " + e.getMessage());
+            return;
+        }
+
+        // Read the text in the image.
+        JSONObject jsonObj = OcrImage(ocrImageUrl.toString());
+
+        // A return of null indicates failure.
+        if (jsonObj == null) {
+            return;
+        }
+              
+        // Format and display the JSON response.
+        ocrResponseTextArea.setText(jsonObj.toString(2)); 
+        JsonParser parseObj = new JsonParser(jsonObj);
+        parseObj.ConvertJSONtoList();
+
+        //parse
+        //ocrResponseTextArea.setText("The tutorial code for this feature has not been added.");
+    }                                              
+
+     /**
+     * Encapsulates the Microsoft Cognitive Services REST API call to read text in an image.
+     * @param imageUrl: The string URL of the image to process.
+     * @return: A JSONObject describing the image, or null if a runtime error occurs.
+     */
+    private JSONObject OcrImage(String imageUrl) {
+        try (CloseableHttpClient httpclient = HttpClientBuilder.create().build())
+        {
+            // Create the URI to access the REST API call to read text in an image.
+            String uriString = uriBasePreRegion + 
+                    String.valueOf(subscriptionRegionComboBox.getSelectedItem()) + 
+                    uriBasePostRegion + uriBaseOcr;
+            URIBuilder uriBuilder = new URIBuilder(uriString);
+
+            // Request parameters.
+            uriBuilder.setParameter("language", "unk");
+            uriBuilder.setParameter("detectOrientation ", "true");
+
+            // Prepare the URI for the REST API call.
+            URI uri = uriBuilder.build();
+            HttpPost request = new HttpPost(uri);
+
+            // Request headers.
+            request.setHeader("Content-Type", "application/json");
+            request.setHeader("Ocp-Apim-Subscription-Key", subscriptionKeyTextField.getText());
+
+            // Request body.
+            StringEntity reqEntity = new StringEntity("{\"url\":\"" + imageUrl + "\"}");
+            request.setEntity(reqEntity);
+
+            // Execute the REST API call and get the response entity.
+            HttpResponse response = httpclient.execute(request);
+            HttpEntity entity = response.getEntity();
+
+            // If we got a response, parse it and display it.
+            if (entity != null)
+            {
+                // Return the JSONObject.
+                String jsonString = EntityUtils.toString(entity);
+                return new JSONObject(jsonString);
+            } else {
+                // No response. Return null.
+                return null;
+            }
+        }
+        catch (Exception e)
+        {
+            // Display error message.
+            System.out.println(e.getMessage());
+            return null;
+        }        
     }//GEN-LAST:event_ocrImageButtonActionPerformed
 
+ 
+    
+    
     private void handwritingImageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_handwritingImageButtonActionPerformed
         // Replace these two lines with the Read Handwritten Text Image event handling code.
         handwritingResponseTextArea.setText("The tutorial code for this feature has not been added.");
