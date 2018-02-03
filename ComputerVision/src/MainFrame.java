@@ -735,8 +735,10 @@ public class MainFrame extends javax.swing.JFrame {
         try (CloseableHttpClient httpclient = HttpClientBuilder.create().build())
         {
             // Create the URI to access the REST API call to read text in an image.
-            String uriString = uriBasePreRegion + 
-                    String.valueOf(subscriptionRegionComboBox.getSelectedItem()) + 
+            String subscriptionRegion = "westus";
+            String subscriptionKey = "115d6286ba6a40c0a867c53b45815da6";
+            String uriString = uriBasePreRegion + subscriptionRegion +
+                    //String.valueOf(subscriptionRegionComboBox.getSelectedItem()) + 
                     uriBasePostRegion + uriBaseOcr;
             URIBuilder uriBuilder = new URIBuilder(uriString);
 
@@ -750,7 +752,8 @@ public class MainFrame extends javax.swing.JFrame {
 
             // Request headers.
             request.setHeader("Content-Type", "application/json");
-            request.setHeader("Ocp-Apim-Subscription-Key", subscriptionKeyTextField.getText());
+            //request.setHeader("Ocp-Apim-Subscription-Key", subscriptionKeyTextField.getText());
+            request.setHeader("Ocp-Apim-Subscription-Key",subscriptionKey);
 
             // Request body.
             StringEntity reqEntity = new StringEntity("{\"url\":\"" + imageUrl + "\"}");
