@@ -1,6 +1,7 @@
 // <editor-fold defaultstate="collapsed" desc="Imports">
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
@@ -15,6 +16,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.FileEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 //import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -693,7 +696,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void ocrImageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ocrImageButtonActionPerformed
         // Replace these two lines with the OCR Image event handling code.
         
-        URL ocrImageUrl;
+        //URL ocrImageUrl;
 
         // Clear out the previous image, response, and caption, if any.
         ocrImage.setIcon(new ImageIcon());
@@ -701,16 +704,15 @@ public class MainFrame extends javax.swing.JFrame {
 
         // Display the image specified in the text box.
         try {
-            ocrImageUrl = new URL(ocrImageUriTextBox.getText());
-            BufferedImage bImage = ImageIO.read(ocrImageUrl);
+            //ocrImageUrl = new URL(ocrImageUriTextBox.getText());
+            String ocrImageLoc = ocrImageUriTextBox.getText();
+            //BufferedImage bImage = ImageIO.read(ocrImageUrl);
+            BufferedImage bImage = ImageIO.read(new File(ocrImageLoc));
             scaleAndShowImage(bImage, ocrImage);
-        } catch(IOException e) {
-            ocrResponseTextArea.setText("Error loading OCR image: " + e.getMessage());
-            return;
-        }
 
         // Read the text in the image.
-        JSONObject jsonObj = OcrImage(ocrImageUrl.toString());
+        //JSONObject jsonObj = OcrImage(ocrImageUrl.toString());
+        JSONObject jsonObj = OcrImage(ocrImageLoc);
 
         // A return of null indicates failure.
         if (jsonObj == null) {
@@ -721,7 +723,10 @@ public class MainFrame extends javax.swing.JFrame {
         ocrResponseTextArea.setText(jsonObj.toString(2)); 
         JsonParser parseObj = new JsonParser(jsonObj);
         parseObj.ConvertJSONtoList();
-
+        } catch(IOException e) {
+            ocrResponseTextArea.setText("Error loading OCR image: " + e.getMessage());
+            return;
+        }
         //parse
         //ocrResponseTextArea.setText("The tutorial code for this feature has not been added.");
     }                                              
@@ -751,14 +756,20 @@ public class MainFrame extends javax.swing.JFrame {
             HttpPost request = new HttpPost(uri);
 
             // Request headers.
-            request.setHeader("Content-Type", "application/json");
+            //request.setHeader("Content-Type", "application/json");
+            request.setHeader("Content-Type","application/octet-stream");
             //request.setHeader("Ocp-Apim-Subscription-Key", subscriptionKeyTextField.getText());
             request.setHeader("Ocp-Apim-Subscription-Key",subscriptionKey);
 
             // Request body.
-            StringEntity reqEntity = new StringEntity("{\"url\":\"" + imageUrl + "\"}");
+            File file = new File(imageUrl);
+            FileEntity reqEntity = new FileEntity(file, ContentType.APPLICATION_OCTET_STREAM);
+            request.setEntity(reqEntity);            
+            //FileEntity reqEntity = new FileEntity(file, "application/octet-stream");
+            //request.setEntity(reqEntity);
+            //StringEntity reqEntity = new StringEntity("{\"url\":\"" + imageUrl + "\"}");
             request.setEntity(reqEntity);
-
+            
             // Execute the REST API call and get the response entity.
             HttpResponse response = httpclient.execute(request);
             HttpEntity entity = response.getEntity();
