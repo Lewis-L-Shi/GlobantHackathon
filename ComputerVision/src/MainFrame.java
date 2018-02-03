@@ -65,14 +65,14 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         initComponents();
         myItems = new HashMap();
-        myItems.put(1, new MenuItem("/Users/lewis/Downloads/307.jpg","Stir Fried Jellyfish with shredded Chicken",""));
-        myItems.put(2, new MenuItem("/Users/lewis/Downloads/37.jpg","Sautéed Pork Loins ",""));
-        myItems.put(3, new MenuItem("/Users/lewis/Downloads/338.jpg","Sautéed Beef with Red Basil and Green Onion",""));
-        myItems.put(4, new MenuItem("/Users/lewis/Downloads/141.jpg","Sauteed String Beans with Ground Pork",""));
-        myItems.put(5, new MenuItem("/Users/lewis/Downloads/20.jpg","Seafood Hot and Sour Soup",""));
-        myItems.put(6, new MenuItem("/Users/lewis/Downloads/131.jpg","Braised Tofu with Black Mushrooms and Bamboo Shoots",""));
-        myItems.put(7, new MenuItem("/Users/lewis/Downloads/426.jpg","Pan-fried Red Bean Cake",""));
-        myItems.put(8, new MenuItem("/Users/lewis/Downloads/57.jpg","Honey Walnut Shrimp",""));
+        myItems.put(1, new MenuItem("307.jpg","Stir Fried Jellyfish with shredded Chicken",""));
+        myItems.put(2, new MenuItem("37.jpg","Sautéed Pork Loins ",""));
+        myItems.put(3, new MenuItem("338.jpg","Sautéed Beef with Red Basil and Green Onion",""));
+        myItems.put(4, new MenuItem("141.jpg","Sauteed String Beans with Ground Pork",""));
+        myItems.put(5, new MenuItem("20.jpg","Seafood Hot and Sour Soup",""));
+        myItems.put(6, new MenuItem("131.jpg","Braised Tofu with Black Mushrooms and Bamboo Shoots",""));
+        myItems.put(7, new MenuItem("426.jpg","Pan-fried Red Bean Cake",""));
+        myItems.put(8, new MenuItem("57.jpg","Honey Walnut Shrimp",""));
         initializeTrie();
     }
     
