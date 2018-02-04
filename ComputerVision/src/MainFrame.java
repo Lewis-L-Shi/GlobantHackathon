@@ -12,6 +12,7 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -74,6 +75,8 @@ public class MainFrame extends javax.swing.JFrame {
         myItems.put(7, new MenuItem("426.jpg","Pan-fried Red Bean Cake",""));
         myItems.put(8, new MenuItem("57.jpg","Honey Walnut Shrimp",""));
         initializeTrie();
+        this.ocrScrollPane.setVisible(false);
+        this.ocrResponseLabel.setVisible(false);
     }
     
     private void initializeTrie() {
@@ -171,6 +174,7 @@ public class MainFrame extends javax.swing.JFrame {
         ocrImage = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         menuItemList = new javax.swing.JList<>();
+        fileBrowseButton = new javax.swing.JButton();
         handwritingPanel = new javax.swing.JPanel();
         handwritingTitleLabel = new javax.swing.JLabel();
         handwritingInstructionLabel = new javax.swing.JLabel();
@@ -547,6 +551,13 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(menuItemList);
 
+        fileBrowseButton.setText("Browse For File");
+        fileBrowseButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                browseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout ocrPanelLayout = new javax.swing.GroupLayout(ocrPanel);
         ocrPanel.setLayout(ocrPanelLayout);
         ocrPanelLayout.setHorizontalGroup(
@@ -554,14 +565,6 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(ocrPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(ocrPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ocrTitleLabel)
-                    .addComponent(ocrInstructionLabel)
-                    .addGroup(ocrPanelLayout.createSequentialGroup()
-                        .addComponent(ocrImagePromptLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ocrImageUriTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ocrImageButton))
                     .addGroup(ocrPanelLayout.createSequentialGroup()
                         .addGroup(ocrPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(ocrScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -574,7 +577,20 @@ public class MainFrame extends javax.swing.JFrame {
                             .addGroup(ocrPanelLayout.createSequentialGroup()
                                 .addComponent(ocrImage, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE)))))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE))))
+                    .addGroup(ocrPanelLayout.createSequentialGroup()
+                        .addGroup(ocrPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ocrTitleLabel)
+                            .addComponent(ocrInstructionLabel)
+                            .addGroup(ocrPanelLayout.createSequentialGroup()
+                                .addComponent(ocrImagePromptLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ocrImageUriTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ocrImageButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(fileBrowseButton)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         ocrPanelLayout.setVerticalGroup(
@@ -588,7 +604,8 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(ocrPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ocrImagePromptLabel)
                     .addComponent(ocrImageUriTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ocrImageButton))
+                    .addComponent(ocrImageButton)
+                    .addComponent(fileBrowseButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(ocrPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ocrResponseLabel)
@@ -889,6 +906,18 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_listItemDoubleClicked
 
+    private void browseClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseClicked
+        // TODO add your handling code here:
+        JFileChooser chooser = new JFileChooser();
+        int returnValue = chooser.showOpenDialog(null);
+        File f = null;
+        if(returnValue == JFileChooser.APPROVE_OPTION) {
+            f = chooser.getSelectedFile();
+        }
+        if(f != null)
+            this.ocrImageUriTextBox.setText(f.getPath());
+    }//GEN-LAST:event_browseClicked
+
     /**
      * Scales the given image to fit the label dimensions.
      * @param bImage: The image to fit.
@@ -993,6 +1022,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane celebritiesScrollPane;
     private javax.swing.JLabel celebritiesSourceImageLabel;
     private javax.swing.JLabel celebritiesTitleLabel;
+    private javax.swing.JButton fileBrowseButton;
     private javax.swing.JLabel handwritingImage;
     private javax.swing.JButton handwritingImageButton;
     private javax.swing.JLabel handwritingImagePromptLabel;

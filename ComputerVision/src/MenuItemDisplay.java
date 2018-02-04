@@ -40,6 +40,11 @@ public class MenuItemDisplay extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
+        addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                disposeOnLoseFocus(evt);
+            }
+        });
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Testing");
@@ -67,6 +72,11 @@ public class MenuItemDisplay extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void disposeOnLoseFocus(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_disposeOnLoseFocus
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_disposeOnLoseFocus
 
     /**
      * @param args the command line arguments
